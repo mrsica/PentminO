@@ -1,0 +1,18 @@
+C:\Users\Dunja\source\repos\pentominov1\pentominov1\bin\Debug\pentominov1.exe
+C:\Users\Dunja\source\repos\pentominov1\pentominov1\bin\Debug\pentominov1.pdb
+C:\Users\Dunja\source\repos\pentominov1\pentominov1\obj\Debug\pentominov1.csprojAssemblyReference.cache
+C:\Users\Dunja\source\repos\pentominov1\pentominov1\obj\Debug\pentominov1.Form1.resources
+C:\Users\Dunja\source\repos\pentominov1\pentominov1\obj\Debug\pentominov1.Properties.Resources.resources
+C:\Users\Dunja\source\repos\pentominov1\pentominov1\obj\Debug\pentominov1.csproj.GenerateResource.cache
+C:\Users\Dunja\source\repos\pentominov1\pentominov1\obj\Debug\pentominov1.csproj.CoreCompileInputs.cache
+C:\Users\Dunja\source\repos\pentominov1\pentominov1\obj\Debug\pentominov1.exe
+C:\Users\Dunja\source\repos\pentominov1\pentominov1\obj\Debug\pentominov1.pdb
+C:\Users\Dunja\source\repos\pentominov1 - Copy\pentominov1\bin\Debug\pentominov1.exe
+C:\Users\Dunja\source\repos\pentominov1 - Copy\pentominov1\bin\Debug\pentominov1.pdb
+C:\Users\Dunja\source\repos\pentominov1 - Copy\pentominov1\obj\Debug\pentominov1.csprojAssemblyReference.cache
+C:\Users\Dunja\source\repos\pentominov1 - Copy\pentominov1\obj\Debug\pentominov1.Form1.resources
+C:\Users\Dunja\source\repos\pentominov1 - Copy\pentominov1\obj\Debug\pentominov1.Properties.Resources.resources
+C:\Users\Dunja\source\repos\pentominov1 - Copy\pentominov1\obj\Debug\pentominov1.csproj.GenerateResource.cache
+C:\Users\Dunja\source\repos\pentominov1 - Copy\pentominov1\obj\Debug\pentominov1.csproj.CoreCompileInputs.cache
+C:\Users\Dunja\source\repos\pentominov1 - Copy\pentominov1\obj\Debug\pentominov1.exe
+C:\Users\Dunja\source\repos\pentominov1 - Copy\pentominov1\obj\Debug\pentominov1.pdb
