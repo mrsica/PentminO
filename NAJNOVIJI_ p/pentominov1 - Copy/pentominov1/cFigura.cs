@@ -43,6 +43,7 @@ namespace pentominov1
         {
             mFigure = new int[5, 5];
         }
+
         private void napraviFiguru()
         {
             switch (tipFigure)
@@ -177,7 +178,7 @@ namespace pentominov1
                     if (mFigure[i, j] == 1)
                     {
                         //g.DrawRectangle(crna, pocetakX + dOkvira * j,
-                        //  pocetakY + dOkvira * i, dOkvira, dOkvira);
+                        //   pocetakY + dOkvira * i, dOkvira, dOkvira);
                         g.DrawRectangle(crna, pocetakX + dKvadratica * j,
                           pocetakY + dKvadratica * i, dKvadratica, dKvadratica);
                         g.FillRectangle(bojaFigure, pocetakX + dKvadratica * j,
