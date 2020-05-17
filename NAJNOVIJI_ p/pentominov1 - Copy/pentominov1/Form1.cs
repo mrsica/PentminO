@@ -223,5 +223,12 @@ namespace pentominov1
         {
             label3.Visible = false;
         }
+        
+        //bas je glup0
+        private  void napraviMatricuFigura(cFigura figura)
+        {
+            //lolcina
+        }
+
     }
 }
