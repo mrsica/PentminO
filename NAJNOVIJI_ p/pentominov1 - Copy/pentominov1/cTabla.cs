@@ -106,8 +106,6 @@ namespace pentominov1
             }
             else
                 moze = false;
-            if (moze)
-                UpisiFiguruUTablu(isecenaFolija);
 
             return moze;
         }

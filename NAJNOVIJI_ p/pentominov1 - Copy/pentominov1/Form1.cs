@@ -184,10 +184,12 @@ namespace pentominov1
                         igracNaRedu = 1;
                     }
 
-                    if (OstaloLevom <= 2 && OstaloDesnom <= 2)
-                        KrajIgre(igracNaRedu);
-
                     Invalidate();
+
+                    if (OstaloLevom <= 2 && OstaloDesnom <= 2 && KrajIgre(igracNaRedu))
+                        MessageBox.Show("KRAJ IGRE");
+
+                    
                 }
                 else
                 {
@@ -222,6 +224,8 @@ namespace pentominov1
             fazaIgre = "biranjeFigura";
             brIzabranih1 = 0;
             brIzabranih2 = 0;
+            OstaloLevom = 6;
+            OstaloDesnom = 6;
             igracNaRedu = 1;
             Invalidate();
         }
@@ -245,7 +249,7 @@ namespace pentominov1
             
             for (int p = 0; p < 12; p++)
             {
-                if(igracNaRedu==1 && nizFigura[p].Status=="levo")
+                if(igracNaRedu==1 && nizFigura[p].Status=="levi")
                 {
                     for (int q = 0; q < 4; q++)
                     {
@@ -254,12 +258,29 @@ namespace pentominov1
                         {
                             for (int j = 0; j < 8; j++)
                             {
-
+                                if (tabla.MozeFiguraUTabluZaKraj(nizFigura[p], i, j))
+                                    return false;
+                            }
+                        }
+                    }
+                }
+                if (igracNaRedu == 2 && nizFigura[p].Status == "desni")
+                {
+                    for (int q = 0; q < 4; q++)
+                    {
+                        nizFigura[p].rotiraj();
+                        for (int i = 0; i < 8; i++)
+                        {
+                            for (int j = 0; j < 8; j++)
+                            {
+                                if (tabla.MozeFiguraUTabluZaKraj(nizFigura[p], i, j))
+                                    return false;
                             }
                         }
                     }
                 }
             }
+            return true;
         }
 
     }

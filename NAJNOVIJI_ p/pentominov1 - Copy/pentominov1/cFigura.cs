@@ -249,64 +249,90 @@ namespace pentominov1
                 }
             }
         }
+
+        private bool iDrugaRot = false;
         public void rotiraj()
         {
-            for (int i = 0; i < 2; i++)
+            if (tipFigure == 1)
             {
-                for (int j = i; j < 5 - i - 1; j++)
+                if (iDrugaRot)
                 {
-                    int pom = mFigure[i, j];
-                    mFigure[i, j] = mFigure[j, 4 - i];
-                    mFigure[j, 4 - i] = mFigure[4 - i, 4 - j];
-                    mFigure[4 - i, 4 - j] = mFigure[4 - j, i];
-                    mFigure[4 - j, i] = pom;
+                    for (int i = 0; i < 5; i++)
+                    {
+                        mFigure[0, i] = 0;
+                        mFigure[i, 0] = 1;
+                    }
+                    iDrugaRot = !iDrugaRot;
+                }
+                else
+                {
+                    for (int i = 0; i < 5; i++)
+                    {
+                        mFigure[i, 0] = 0;
+                        mFigure[0, i] = 1;
+                    }
+                    iDrugaRot = !iDrugaRot;
                 }
             }
-            int iPrazno = 0, jPrazno = 0;
-            for (int i = 0; i < 5; i++)
+            else
             {
-                bool promena = false;
-                for (int j = 0; j < 5; j++)
+                for (int i = 0; i < 2; i++)
                 {
-                    if (mFigure[i, j] != 0)
+                    for (int j = i; j < 5 - i - 1; j++)
                     {
-                        promena = true;
-                        break;
+                        int pom = mFigure[i, j];
+                        mFigure[i, j] = mFigure[j, 4 - i];
+                        mFigure[j, 4 - i] = mFigure[4 - i, 4 - j];
+                        mFigure[4 - i, 4 - j] = mFigure[4 - j, i];
+                        mFigure[4 - j, i] = pom;
                     }
                 }
-                if (promena)
-                    break;
-                if (!promena)
-                    iPrazno++;
-            }
-
-            for (int j = 0; j < 5; j++)
-            {
-                bool promena = false;
+                int iPrazno = 0, jPrazno = 0;
                 for (int i = 0; i < 5; i++)
                 {
-                    if (mFigure[i, j] != 0)
+                    bool promena = false;
+                    for (int j = 0; j < 5; j++)
                     {
-                        promena = true;
-                        break;
+                        if (mFigure[i, j] != 0)
+                        {
+                            promena = true;
+                            break;
+                        }
                     }
-                        
+                    if (promena)
+                        break;
+                    if (!promena)
+                        iPrazno++;
                 }
-                if (promena)
-                    break;
-                if (!promena)
-                    jPrazno++;
-                
-            }
 
-            for (int i = 0; i < 5; i++)
-            {
                 for (int j = 0; j < 5; j++)
                 {
-                    if(mFigure[i,j]==1)
+                    bool promena = false;
+                    for (int i = 0; i < 5; i++)
                     {
-                        mFigure[i - iPrazno, j - jPrazno] = 1;
-                        mFigure[i, j] = 0;
+                        if (mFigure[i, j] != 0)
+                        {
+                            promena = true;
+                            break;
+                        }
+
+                    }
+                    if (promena)
+                        break;
+                    if (!promena)
+                        jPrazno++;
+
+                }
+
+                for (int i = 0; i < 5; i++)
+                {
+                    for (int j = 0; j < 5; j++)
+                    {
+                        if (mFigure[i, j] == 1)
+                        {
+                            mFigure[Math.Abs(i - iPrazno), Math.Abs(j - jPrazno)] = 1;
+                            mFigure[i, j] = 0;
+                        }
                     }
                 }
             }
