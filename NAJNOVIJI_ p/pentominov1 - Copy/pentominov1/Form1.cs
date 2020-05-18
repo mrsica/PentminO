@@ -183,7 +183,10 @@ namespace pentominov1
                         OstaloDesnom--;
                         igracNaRedu = 1;
                     }
-                        
+
+                    if (OstaloLevom <= 2 && OstaloDesnom <= 2)
+                        KrajIgre(igracNaRedu);
+
                     Invalidate();
                 }
                 else
@@ -233,10 +236,30 @@ namespace pentominov1
             label3.Visible = false;
         }
         
+
+
+
         //bas je glup0
-        private bool KrajIgre()
+        private bool KrajIgre(int igracNaRedu)
         {
             
+            for (int p = 0; p < 12; p++)
+            {
+                if(igracNaRedu==1 && nizFigura[p].Status=="levo")
+                {
+                    for (int q = 0; q < 4; q++)
+                    {
+                        nizFigura[p].rotiraj();
+                        for (int i = 0; i < 8; i++)
+                        {
+                            for (int j = 0; j < 8; j++)
+                            {
+
+                            }
+                        }
+                    }
+                }
+            }
         }
 
     }
