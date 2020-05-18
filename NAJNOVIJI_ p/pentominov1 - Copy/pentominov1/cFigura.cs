@@ -262,6 +262,54 @@ namespace pentominov1
                     mFigure[4 - j, i] = pom;
                 }
             }
+            int iPrazno = 0, jPrazno = 0;
+            for (int i = 0; i < 5; i++)
+            {
+                bool promena = false;
+                for (int j = 0; j < 5; j++)
+                {
+                    if (mFigure[i, j] != 0)
+                    {
+                        promena = true;
+                        break;
+                    }
+                }
+                if (promena)
+                    break;
+                if (!promena)
+                    iPrazno++;
+            }
+
+            for (int j = 0; j < 5; j++)
+            {
+                bool promena = false;
+                for (int i = 0; i < 5; i++)
+                {
+                    if (mFigure[i, j] != 0)
+                    {
+                        promena = true;
+                        break;
+                    }
+                        
+                }
+                if (promena)
+                    break;
+                if (!promena)
+                    jPrazno++;
+                
+            }
+
+            for (int i = 0; i < 5; i++)
+            {
+                for (int j = 0; j < 5; j++)
+                {
+                    if(mFigure[i,j]==1)
+                    {
+                        mFigure[i - iPrazno, j - jPrazno] = 1;
+                        mFigure[i, j] = 0;
+                    }
+                }
+            }
         }
     }
 }

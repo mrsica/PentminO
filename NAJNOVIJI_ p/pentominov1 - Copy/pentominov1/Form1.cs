@@ -163,7 +163,8 @@ namespace pentominov1
                 nizFigura[selektovano].pocetakY = mis.Y - rY;
             }
         }
-        
+        int OstaloLevom = 6, OstaloDesnom=6;
+
         private void Form1_MouseUp(object sender, MouseEventArgs e)
         {
             if (selektovano != -1 && tabla.FiguraUTabli(mis.X, mis.Y))
@@ -172,9 +173,17 @@ namespace pentominov1
                 {
                     nizFigura[selektovano].Status = "naTabli";
                     if (igracNaRedu == 1)
+                    {
+                        OstaloLevom--;
                         igracNaRedu = 2;
+                    }
+                        
                     else
+                    {
+                        OstaloDesnom--;
                         igracNaRedu = 1;
+                    }
+                        
                     Invalidate();
                 }
                 else
@@ -225,9 +234,9 @@ namespace pentominov1
         }
         
         //bas je glup0
-        private  void napraviMatricuFigura(cFigura figura)
+        private bool KrajIgre()
         {
-            //lolcina
+            
         }
 
     }

@@ -34,3 +34,12 @@ C:\Users\Dunja\source\repos\pentominov1 - Copy\PentminO\NAJNOVIJI_ p\pentominov1
 C:\Users\Dunja\source\repos\pentominov1 - Copy\PentminO\NAJNOVIJI_ p\pentominov1 - Copy\pentominov1\obj\Debug\pentominov1.csproj.CoreCompileInputs.cache
 C:\Users\Dunja\source\repos\pentominov1 - Copy\PentminO\NAJNOVIJI_ p\pentominov1 - Copy\pentominov1\obj\Debug\pentominov1.exe
 C:\Users\Dunja\source\repos\pentominov1 - Copy\PentminO\NAJNOVIJI_ p\pentominov1 - Copy\pentominov1\obj\Debug\pentominov1.pdb
+E:\pentomino\PentminO\NAJNOVIJI_ p\pentominov1 - Copy\pentominov1\bin\Debug\pentominov1.exe
+E:\pentomino\PentminO\NAJNOVIJI_ p\pentominov1 - Copy\pentominov1\bin\Debug\pentominov1.pdb
+E:\pentomino\PentminO\NAJNOVIJI_ p\pentominov1 - Copy\pentominov1\obj\Debug\pentominov1.csprojAssemblyReference.cache
+E:\pentomino\PentminO\NAJNOVIJI_ p\pentominov1 - Copy\pentominov1\obj\Debug\pentominov1.Form1.resources
+E:\pentomino\PentminO\NAJNOVIJI_ p\pentominov1 - Copy\pentominov1\obj\Debug\pentominov1.Properties.Resources.resources
+E:\pentomino\PentminO\NAJNOVIJI_ p\pentominov1 - Copy\pentominov1\obj\Debug\pentominov1.csproj.GenerateResource.cache
+E:\pentomino\PentminO\NAJNOVIJI_ p\pentominov1 - Copy\pentominov1\obj\Debug\pentominov1.csproj.CoreCompileInputs.cache
+E:\pentomino\PentminO\NAJNOVIJI_ p\pentominov1 - Copy\pentominov1\obj\Debug\pentominov1.exe
+E:\pentomino\PentminO\NAJNOVIJI_ p\pentominov1 - Copy\pentominov1\obj\Debug\pentominov1.pdb
