@@ -97,9 +97,10 @@ namespace pentominov1
                             nizFigura[i].Status = "levi"; //figura pripada levom igracu
                             brIzabranih1++;
                             igracNaRedu = 2;
+                            KompjuterBira();
                             Invalidate();
                         }
-                        else
+                        /*else
                         {
                             nizFigura[i].pocetakX = figure2Pozicije[brIzabranih2].X; 
                             nizFigura[i].pocetakY = figure2Pozicije[brIzabranih2].Y;
@@ -107,7 +108,7 @@ namespace pentominov1
                             brIzabranih2++;
                             igracNaRedu = 1;
                             Invalidate();
-                        }
+                        }*/
                         break;
                     }
                 }
@@ -152,6 +153,28 @@ namespace pentominov1
                 }
                 timerPomeranje.Enabled = true;
             }
+        }
+
+        private void KompjuterBira()
+        {
+            /*Random rnd = new Random();
+            int br = rnd.Next(0, 12);*/
+            for (int i = 0; i < 12; i++)
+            {
+                //int m = Math.Abs(i - br); //malo vise random, da ne bude prva sledeca
+                if (nizFigura[i].Status == "slobodan")
+                {
+                    nizFigura[i].pocetakX = figure2Pozicije[brIzabranih2].X;
+                    nizFigura[i].pocetakY = figure2Pozicije[brIzabranih2].Y;
+                    nizFigura[i].Status = "desni"; //figura pripada desnom igracu
+                    brIzabranih2++;
+                    igracNaRedu = 1;
+                    Invalidate();
+                    return;
+                }
+            }
+
+
         }
 
         private void Form1_MouseMove(object sender, MouseEventArgs e)
@@ -217,6 +240,7 @@ namespace pentominov1
             for (int i = 0; i < 12; i++)
             {
                 nizFigura[i].Status = "slobodan";
+                nizFigura[i].Polozaj = 1; // vraca na pocetnu rotaciju
                 nizFigura[i].PostaviPoziciju(nizPocPozicija[i].X, nizPocPozicija[i].Y);
             }
 

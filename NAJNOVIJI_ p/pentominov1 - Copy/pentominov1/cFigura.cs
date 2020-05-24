@@ -31,6 +31,19 @@ namespace pentominov1
                 status = value;
             }
         }
+        private int trpolozaj = 1; // rotacije figura 1 - 4 (na pocetku je 1)
+        public int Polozaj
+        {
+            get { return trpolozaj; }
+            set
+            {
+                trpolozaj = value;
+                if (trpolozaj == 1) // mnogo memorije?
+                {
+                    napraviFiguru();
+                }
+            }
+        }
 
         public struct uredjeniPar
         {
