@@ -8,7 +8,7 @@ namespace pentominov1
 {
     class cTabla
     {
-        private int[,] mTable;
+        public int[,] mTable;
         private SolidBrush bojaTable = new SolidBrush(Color.White);
 
         public int tackaumatriciI;
@@ -110,6 +110,31 @@ namespace pentominov1
             return moze;
         }
 
+        public bool MozeFiguraUTabluRacunaj(cFigura figura, int i, int j)
+        {
+            cFolija folija = new cFolija();
+            bool moze = true;
+            int[,] isecenaFolija = new int[8, 8];
+            if (folija.ZalepiFiguru(figura, i, j))
+            {
+                isecenaFolija = folija.Iseci();
+                for (int p = 0; p < 8; p++)
+                {
+                    for (int q = 0; q < 8; q++)
+                    {
+                        if (mTable[p, q] != 0 && isecenaFolija[p, q] != 0)
+                            moze = false;
+                    }
+                }
+            }
+            else
+                moze = false;
+            if (moze)
+                UpisiFiguruUTablu(isecenaFolija);
+
+            return moze;
+        }
+
         public void UpisiFiguruUTablu(int[,] mfolije)
         {
             for (int i = 0; i < 8; i++)
@@ -166,6 +191,20 @@ namespace pentominov1
             }
             return false;
         }
-        
+        public cTabla zameni(cTabla tabla)
+        {
+            int[,] matrica = new int[8, 8];
+            for (int i = 0; i < 8; i++)
+            {
+                for (int j = 0; j < 8; j++)
+                {
+                    matrica[i, j] = tabla.mTable[i, j];
+                }
+            }
+            cTabla novatabla=new cTabla();
+            novatabla.mTable = matrica;
+            return novatabla;
+        }
+
     }
 }

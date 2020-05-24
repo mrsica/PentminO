@@ -20,7 +20,7 @@ namespace pentominov1
         public int maliKvadrat = 15; //jedinicni kv figurice
         cFigura[] nizFigura = new cFigura[12];
         public Point[] nizPocPozicija = new Point[12];
-        cTabla tabla = new cTabla();
+        static cTabla tabla = new cTabla();
         string fazaIgre;
         int igracNaRedu;
         public Point[] figure1Pozicije = new Point[6];
@@ -37,7 +37,7 @@ namespace pentominov1
             {
                 nizFigura[i] = new cFigura();
                 nizFigura[i].TipFigure = i;
-                nizFigura[i].Status = "slobodan"; // statusi : slobodan, levi, desni, naTabli
+                nizFigura[i].Status = "slobodan"; // statusi : slobodan, levi, desni, naTabli, racunaj
                 nizPocPozicija[i].X = 150 + (i % 6) * 100;
                 if (i < 6) nizPocPozicija[i].Y = 230;
                 else nizPocPozicija[i].Y = 310;
@@ -71,7 +71,7 @@ namespace pentominov1
                     nizFigura[i].Nacrtaj(e.Graphics);
             }
 
-            
+
             labelBrIgraca.Text = igracNaRedu.ToString();
         }
         public Point mis;
@@ -84,15 +84,15 @@ namespace pentominov1
             mis = PointToClient(MousePosition);
             if (fazaIgre == "biranjeFigura" && brIzabranih1 == 6 && brIzabranih2 == 6)
                 fazaIgre = "partija";
-            if(fazaIgre == "biranjeFigura")
+            if (fazaIgre == "biranjeFigura")
             {
                 for (int i = 0; i < 12; i++)
                 {
                     if (nizFigura[i].MisUFiguri(mis.X, mis.Y))
                     {
-                        if(igracNaRedu == 1)
+                        if (igracNaRedu == 1)
                         {
-                            nizFigura[i].pocetakX = figure1Pozicije[brIzabranih1].X; 
+                            nizFigura[i].pocetakX = figure1Pozicije[brIzabranih1].X;
                             nizFigura[i].pocetakY = figure1Pozicije[brIzabranih1].Y;
                             nizFigura[i].Status = "levi"; //figura pripada levom igracu
                             brIzabranih1++;
@@ -186,7 +186,7 @@ namespace pentominov1
                 nizFigura[selektovano].pocetakY = mis.Y - rY;
             }
         }
-        int OstaloLevom = 6, OstaloDesnom=6;
+        int OstaloLevom = 6, OstaloDesnom = 6;
 
         private void Form1_MouseUp(object sender, MouseEventArgs e)
         {
@@ -200,7 +200,7 @@ namespace pentominov1
                         OstaloLevom--;
                         igracNaRedu = 2;
                     }
-                        
+
                     else
                     {
                         OstaloDesnom--;
@@ -212,7 +212,7 @@ namespace pentominov1
                     if (OstaloLevom <= 2 && OstaloDesnom <= 2 && KrajIgre(igracNaRedu))
                         MessageBox.Show("KRAJ IGRE");
 
-                    
+
                 }
                 else
                 {
@@ -221,13 +221,13 @@ namespace pentominov1
                 }
 
             }
-            selektovano = -1; 
+            selektovano = -1;
             timerPomeranje.Enabled = false;
         }
 
         private void timerPomeranje_Tick(object sender, EventArgs e)
         {
-            if(timerPomeranje.Enabled && selektovano != -1)
+            if (timerPomeranje.Enabled && selektovano != -1)
             {
                 Invalidate();
             }
@@ -263,17 +263,17 @@ namespace pentominov1
         {
             label3.Visible = false;
         }
-        
+
 
 
 
         //bas je glup0
         private bool KrajIgre(int igracNaRedu)
         {
-            
+
             for (int p = 0; p < 12; p++)
             {
-                if(igracNaRedu==1 && nizFigura[p].Status=="levi")
+                if (igracNaRedu == 1 && nizFigura[p].Status == "levi")
                 {
                     for (int q = 0; q < 4; q++)
                     {
@@ -306,6 +306,137 @@ namespace pentominov1
             }
             return true;
         }
+        static cTabla novatabla;
+        
 
+        int Minimax(cTabla novatabla, int dubina, bool maximizingPlayer)
+        {
+            novatabla.zameni(tabla);
+            string status;
+            int igracnaredu;
+            if (maximizingPlayer)
+            {
+                status = "desni";
+                igracnaredu = 2;
+            }
+
+
+            else
+            {
+                status = "levi";
+                igracnaredu = 1;
+            }
+
+
+            if (dubina == 0)
+            {
+                return brojmogucihpoteza(novatabla, status);
+            }
+
+
+
+            if (KrajIgre(igracnaredu))
+                return 0;
+
+
+
+            if (maximizingPlayer)
+            {
+
+                int maxVrednost = int.MinValue;
+
+
+                for (int p = 0; p < 12; p++)
+                {
+
+                    if (nizFigura[p].Status == "desni")
+                    {
+                        for (int q = 0; q < 4; q++)
+                        {
+                            nizFigura[p].rotiraj();
+                            for (int i = 0; i < 8; i++)
+                            {
+                                for (int j = 0; j < 8; j++)
+                                {
+                                    if (novatabla.MozeFiguraUTabluRacunaj(nizFigura[p], i, j))
+                                    {
+
+
+                                        nizFigura[p].Status = "racunaj";
+
+
+                                        int vrednost = Minimax(novatabla, dubina - 1, false);
+                                        maxVrednost = Math.Max(vrednost, maxVrednost);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                return maxVrednost;
+            }
+            else
+            {
+                int minVrednost = int.MaxValue;
+
+
+                for (int p = 0; p < 12; p++)
+                {
+                    if (nizFigura[p].Status == "levi")
+                    {
+                        for (int q = 0; q < 4; q++)
+                        {
+                            nizFigura[p].rotiraj();
+                            for (int i = 0; i < 8; i++)
+                            {
+                                for (int j = 0; j < 8; j++)
+                                {
+                                    if (tabla.MozeFiguraUTabluRacunaj(nizFigura[p], i, j))
+                                    {
+                                        nizFigura[p].Status = "racunaj";
+
+
+                                        int vrednost = Minimax(novatabla, dubina - 1, true);
+                                        minVrednost = Math.Min(vrednost, minVrednost);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                return minVrednost;
+            }
+        }
+
+        int brojmogucihpoteza(cTabla tabla, string status)
+        {
+            int broj = 0;
+            for (int t = 0; t < 12; t++)
+            {
+                for (int q = 0; q < 4; q++)
+                {
+                    nizFigura[t].rotiraj();
+                    if (nizFigura[t].Status == status)
+                    {
+                        for (int i = 0; i < 8; i++)
+                        {
+                            for (int j = 0; j < 8; j++)
+                            {
+
+                                if (tabla.MozeFiguraUTabluZaKraj(nizFigura[t], i, j))
+                                {
+                                    broj++;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            if (status == "levi")
+                broj *= -1;
+            return broj;
+
+        }
     }
+
 }
