@@ -28,6 +28,8 @@ namespace pentominov1
         public Point[] figure2Pozicije = new Point[6];
         public int brIzabranih2 = 0;
 
+        static cTabla novatabla = new cTabla(); //kopija trenutne table
+
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -37,7 +39,7 @@ namespace pentominov1
             {
                 nizFigura[i] = new cFigura();
                 nizFigura[i].TipFigure = i;
-                nizFigura[i].Status = "slobodan"; // statusi : slobodan, levi, desni, naTabli, racunaj
+                nizFigura[i].Status = "slobodan"; // statusi : slobodan, levi, desni, naTabli, racunaj(leviracunaj i desniracunaj)
                 nizPocPozicija[i].X = 150 + (i % 6) * 100;
                 if (i < 6) nizPocPozicija[i].Y = 230;
                 else nizPocPozicija[i].Y = 310;
@@ -119,8 +121,8 @@ namespace pentominov1
                 {
                     if (nizFigura[i].MisUFiguri(mis.X, mis.Y))
                     {
-                        if ((nizFigura[i].Status == "levi" && igracNaRedu == 2) ||
-                            (nizFigura[i].Status == "desni" && igracNaRedu == 1))
+                        if (((nizFigura[i].Status == "levi" || nizFigura[i].Status == "leviracunaj") && igracNaRedu == 2) ||
+                            ((nizFigura[i].Status == "desni" || (nizFigura[i].Status == "desniracunaj") && igracNaRedu == 1)))
                         {
                             MessageBox.Show("Nemoguće je pomerati figure drugog igrača");
                             break;
@@ -195,10 +197,13 @@ namespace pentominov1
                 if (tabla.MozeFiguraUTablu(nizFigura[selektovano], mis.X, mis.Y))
                 {
                     nizFigura[selektovano].Status = "naTabli";
+                    novatabla.zameni(novatabla, tabla);
                     if (igracNaRedu == 1)
                     {
                         OstaloLevom--;
                         igracNaRedu = 2;
+                        int z = Minimax(novatabla, 3, true);
+                        MessageBox.Show(z.ToString());
                     }
 
                     else
@@ -209,7 +214,8 @@ namespace pentominov1
 
                     Invalidate();
 
-                    if (OstaloLevom <= 2 && OstaloDesnom <= 2 && KrajIgre(igracNaRedu))
+                    labelBrIgraca.Text = igracNaRedu.ToString();
+                    if (OstaloLevom <= 3 && OstaloDesnom <= 3 && KrajIgre(igracNaRedu))
                         MessageBox.Show("KRAJ IGRE");
 
 
@@ -245,6 +251,7 @@ namespace pentominov1
             }
 
             tabla = new cTabla();
+            novatabla.zameni(novatabla, tabla);
             fazaIgre = "biranjeFigura";
             brIzabranih1 = 0;
             brIzabranih2 = 0;
@@ -273,7 +280,7 @@ namespace pentominov1
 
             for (int p = 0; p < 12; p++)
             {
-                if (igracNaRedu == 1 && nizFigura[p].Status == "levi")
+                if (igracNaRedu == 1 && (nizFigura[p].Status == "levi" || nizFigura[p].Status == "leviracunaj"))
                 {
                     for (int q = 0; q < 4; q++)
                     {
@@ -288,7 +295,7 @@ namespace pentominov1
                         }
                     }
                 }
-                if (igracNaRedu == 2 && nizFigura[p].Status == "desni")
+                if (igracNaRedu == 2 && (nizFigura[p].Status == "desni" || nizFigura[p].Status == "desniracunaj"))
                 {
                     for (int q = 0; q < 4; q++)
                     {
@@ -306,12 +313,11 @@ namespace pentominov1
             }
             return true;
         }
-        static cTabla novatabla;
         
 
-        int Minimax(cTabla novatabla, int dubina, bool maximizingPlayer)
+
+        private int Minimax(cTabla novatabla, int dubina, bool maximizingPlayer)
         {
-            novatabla.zameni(tabla);
             string status;
             int igracnaredu;
             if (maximizingPlayer)
@@ -319,36 +325,26 @@ namespace pentominov1
                 status = "desni";
                 igracnaredu = 2;
             }
-
-
             else
             {
                 status = "levi";
                 igracnaredu = 1;
             }
 
-
             if (dubina == 0)
             {
                 return brojmogucihpoteza(novatabla, status);
             }
-
-
-
+            
             if (KrajIgre(igracnaredu))
                 return 0;
-
-
-
             if (maximizingPlayer)
             {
-
                 int maxVrednost = int.MinValue;
-
-
+                
                 for (int p = 0; p < 12; p++)
                 {
-
+                    bool prekid = false;
                     if (nizFigura[p].Status == "desni")
                     {
                         for (int q = 0; q < 4; q++)
@@ -360,16 +356,17 @@ namespace pentominov1
                                 {
                                     if (novatabla.MozeFiguraUTabluRacunaj(nizFigura[p], i, j))
                                     {
-
-
-                                        nizFigura[p].Status = "racunaj";
-
+                                        nizFigura[p].Status = "desniracunaj";
 
                                         int vrednost = Minimax(novatabla, dubina - 1, false);
                                         maxVrednost = Math.Max(vrednost, maxVrednost);
+                                        prekid = true;
+                                        break;
                                     }
                                 }
+                                if (prekid) break;
                             }
+                            if (prekid) break;
                         }
                     }
                 }
@@ -382,6 +379,7 @@ namespace pentominov1
 
                 for (int p = 0; p < 12; p++)
                 {
+                    bool prekid = false;
                     if (nizFigura[p].Status == "levi")
                     {
                         for (int q = 0; q < 4; q++)
@@ -391,16 +389,20 @@ namespace pentominov1
                             {
                                 for (int j = 0; j < 8; j++)
                                 {
-                                    if (tabla.MozeFiguraUTabluRacunaj(nizFigura[p], i, j))
+                                    if (novatabla.MozeFiguraUTabluRacunaj(nizFigura[p], i, j))
                                     {
-                                        nizFigura[p].Status = "racunaj";
+                                        nizFigura[p].Status = "leviracunaj";
 
 
                                         int vrednost = Minimax(novatabla, dubina - 1, true);
                                         minVrednost = Math.Min(vrednost, minVrednost);
+                                        prekid = true;
+                                        break;
                                     }
                                 }
+                                if (prekid) break;
                             }
+                            if (prekid) break;
                         }
                     }
                 }
@@ -408,29 +410,29 @@ namespace pentominov1
             }
         }
 
-        int brojmogucihpoteza(cTabla tabla, string status)
+        private int brojmogucihpoteza(cTabla tablab, string status)
         {
             int broj = 0;
             for (int t = 0; t < 12; t++)
             {
-                for (int q = 0; q < 4; q++)
+                if (nizFigura[t].Status == status)
                 {
-                    nizFigura[t].rotiraj();
-                    if (nizFigura[t].Status == status)
+                    for (int q = 0; q < 4; q++)
                     {
+                        nizFigura[t].rotiraj();
                         for (int i = 0; i < 8; i++)
                         {
                             for (int j = 0; j < 8; j++)
                             {
 
-                                if (tabla.MozeFiguraUTabluZaKraj(nizFigura[t], i, j))
+                                if (tablab.MozeFiguraUTabluZaKraj(nizFigura[t], i, j))
                                 {
                                     broj++;
                                 }
                             }
                         }
                     }
-                }
+                } 
             }
             if (status == "levi")
                 broj *= -1;

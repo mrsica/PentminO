@@ -129,13 +129,12 @@ namespace pentominov1
             }
             else
                 moze = false;
-            if (moze)
-                UpisiFiguruUTablu(isecenaFolija);
-
+            if (moze) UpisiFiguruUTablu(isecenaFolija);
             return moze;
         }
+        
 
-        public void UpisiFiguruUTablu(int[,] mfolije)
+        private void UpisiFiguruUTablu(int[,] mfolije)
         {
             for (int i = 0; i < 8; i++)
             {
@@ -191,7 +190,7 @@ namespace pentominov1
             }
             return false;
         }
-        public cTabla zameni(cTabla tabla)
+        public cTabla zameni(cTabla novatabla, cTabla tabla)
         {
             int[,] matrica = new int[8, 8];
             for (int i = 0; i < 8; i++)
@@ -201,7 +200,6 @@ namespace pentominov1
                     matrica[i, j] = tabla.mTable[i, j];
                 }
             }
-            cTabla novatabla=new cTabla();
             novatabla.mTable = matrica;
             return novatabla;
         }
