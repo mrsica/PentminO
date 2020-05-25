@@ -122,7 +122,7 @@ namespace pentominov1
                     if (nizFigura[i].MisUFiguri(mis.X, mis.Y))
                     {
                         if (((nizFigura[i].Status == "levi" || nizFigura[i].Status == "leviracunaj") && igracNaRedu == 2) ||
-                            ((nizFigura[i].Status == "desni" || (nizFigura[i].Status == "desniracunaj") && igracNaRedu == 1)))
+                            ((nizFigura[i].Status == "desni" || nizFigura[i].Status == "desniracunaj") && igracNaRedu == 1))
                         {
                             MessageBox.Show("Nemoguće je pomerati figure drugog igrača");
                             break;
@@ -202,7 +202,7 @@ namespace pentominov1
                     {
                         OstaloLevom--;
                         igracNaRedu = 2;
-                        int z = Minimax(novatabla, 3, true);
+                        int z = Minimax(novatabla, 2, true);
                         MessageBox.Show(z.ToString());
                     }
 
@@ -270,10 +270,7 @@ namespace pentominov1
         {
             label3.Visible = false;
         }
-
-
-
-
+        
         //bas je glup0
         private bool KrajIgre(int igracNaRedu)
         {
@@ -322,18 +319,21 @@ namespace pentominov1
             int igracnaredu;
             if (maximizingPlayer)
             {
-                status = "desni";
+                status = "desniracunaj";
                 igracnaredu = 2;
             }
             else
             {
-                status = "levi";
+                status = "leviracunaj";
                 igracnaredu = 1;
             }
 
             if (dubina == 0)
             {
-                return brojmogucihpoteza(novatabla, status);
+                int pot = brojmogucihpoteza(novatabla, status);
+                MessageBox.Show(pot.ToString(), "brojmogucihpoteza");
+                //return brojmogucihpoteza(novatabla, status);
+                return pot;
             }
             
             if (KrajIgre(igracnaredu))
@@ -345,7 +345,7 @@ namespace pentominov1
                 for (int p = 0; p < 12; p++)
                 {
                     bool prekid = false;
-                    if (nizFigura[p].Status == "desni")
+                    if (nizFigura[p].Status == "desni" || nizFigura[p].Status == "desniracunaj")
                     {
                         for (int q = 0; q < 4; q++)
                         {
@@ -370,6 +370,7 @@ namespace pentominov1
                         }
                     }
                 }
+                MessageBox.Show(maxVrednost.ToString(), "maxVrednost");
                 return maxVrednost;
             }
             else
@@ -380,7 +381,7 @@ namespace pentominov1
                 for (int p = 0; p < 12; p++)
                 {
                     bool prekid = false;
-                    if (nizFigura[p].Status == "levi")
+                    if (nizFigura[p].Status == "levi" || nizFigura[p].Status == "leviracunaj")
                     {
                         for (int q = 0; q < 4; q++)
                         {
@@ -406,6 +407,7 @@ namespace pentominov1
                         }
                     }
                 }
+                MessageBox.Show(minVrednost.ToString(), "minVrednost");
                 return minVrednost;
             }
         }
@@ -434,7 +436,7 @@ namespace pentominov1
                     }
                 } 
             }
-            if (status == "levi")
+            if (status == "leviracunaj")
                 broj *= -1;
             return broj;
 
